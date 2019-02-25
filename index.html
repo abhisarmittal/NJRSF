@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input id="city" value="Boston" placeholder="city"><br/>
+    <input id="plant" value="tulips" placeholder="plant"><br/>
+    <input id="soil" value="30%" placeholder="soil moisture" >
+    <br/>
+    <input type="button" value="Go"  onclick="process()"/>
+    <div id="output">
+    </div>
+</body>
+</html>
+
+
+<script>
+
+const process = () => {
+    var  city = document.querySelector('#city').value;
+    var plant = document.querySelector('#plant').value;
+    var soil = document.querySelector('#soil').value;
+    var payload = {
+        "result": {
+        	"action":"water-recommendation",
+        	"parameters": {
+                "geo-city": city,
+                "plant-type": plant,
+                "SoilMoisture": soil
+            }
+        }
+    };
+    console.log(payload);
+    fetch('/webhook', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(res=>res.json())
+      .then(res => {
+          console.log(res);
+          document.querySelector('#output').innerHTML = res.speech;
+      });
+  }
+</script>
