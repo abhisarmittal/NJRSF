@@ -45,7 +45,7 @@ def processRequest(req):
     return res
 
 
-def makeWebhookResult():
+def makeWebhookResult(speech):
     speech = "Hoot from webhook in python!!!!" 
 
     print("Response:")
