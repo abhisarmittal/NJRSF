@@ -41,13 +41,13 @@ def webhook():
     return r
 
 def processRequest(req):
+    speech = "Hoot from webhook in python!!!!" 
     res = makeWebhookResult(speech)
     return res
 
 
 def makeWebhookResult(speech):
-    speech = "Hoot from webhook in python!!!!" 
-
+    
     print("Response:")
     print(speech)
 
