@@ -1,22 +1,66 @@
-# import flask modules
-from flask import Flask, make_response, request, jsonify
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-# build the flask app
+from __future__ import print_function
+from future.standard_library import install_aliases
+install_aliases()
+
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
+
+import json
+import os
+
+from flask import Flask
+from flask import request
+from flask import make_response
+from flask import render_template
+
+
+# Flask app should start in global layout
+
 app = Flask(__name__)
 
-# definition of the results function
-def results():
-    req = request.get_json(force=True)
-    action = req.get('queryResult').get('action')
+@app.route('/hello')
+def hello():
+    return render_template('index.html')
 
-    if action == "gdd":
-        # your action statements here
-        # do whatever you want
-        # return response in dialogflow response format
-        # i am going to use Dialogflow JSON reponse format
-        # first build result json
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    req = request.get_json(silent=True, force=True)
 
-        result = {} # an empty dictionary
+    #print('Request:')
+    #print(json.dumps(req, indent=4))
+    res = processRequest(req)
+    res = json.dumps(res, indent=4)
+    print(res)
 
-        # fulfillment text is the default response that is returned to the dialogflow request
-        result["fulfillmentText"] = "testing gdd"
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+def processRequest(req):
+    res = makeWebhookResult()
+    return res
+
+
+def makeWebhookResult():
+    speech = "Hoot from webhook in python!!!!" 
+
+    print("Response:")
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        "source": "Build conversational interface for your app in 10 minutes."
+    }
+
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+
+    print("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
