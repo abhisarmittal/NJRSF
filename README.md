@@ -1,8 +1,6 @@
-# apiweathertest
+# GDD PET science project 2019
 
-yuvanshu learning python for the about the science project on personal gardener
-
-app1 contains original python code for my-personal-gardener
+personal gardener using GDD and PET from ahwere
 
 deploy to heroku 
 
