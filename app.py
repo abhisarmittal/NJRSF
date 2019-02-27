@@ -55,15 +55,15 @@ def processRequest(req):
     
     parameters = req_dict["result"]["parameters"]
     
-    date = parameters["date"][5:10]
-    today_date = parameters["today-date"][5:10]
+    #date = parameters["date"][5:10]
+    today_date = parameters["today-date"]
     crop = parameters["crop"]
 
     #aWhere = AWhereAPI(today_date, date)
     #aWhere.get_agronomic_url_today()
 
     # constructing the resposne string.
-    speech = date + "  " + today_date + "  " + crop
+    speech = today_date + "  " + crop
     res = makeWebhookResult(speech)
     return res
 
