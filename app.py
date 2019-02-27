@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+from future.standard_library import install_aliases
+install_aliases()
+
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError
@@ -39,16 +43,16 @@ def webhook():
 def processRequest(req):
     # Parsing the POST request body into a dictionary for easy access. 
     req_dict = json.loads(request.data)
+    entity_type = ""
+    entity_value = ""
+    # Accessing the fields on the POST request boduy of API.ai invocation of the webhook
+    intent = req_dict["result"]["metadata"]["intentName"]
 
-    parameters = req_dict["result"]["parameters"]
-	
-    #aWhere = AWhereAPI('02-25', '12-31')
-    #aWhere.get_agronomic_url_today()
-	
-    #date = parameters["date"]
-    #today_date = parameters["today-date"]
-    #crop = parameters["crop"]
-	
+    entity_key_val = req_dict["result"]["parameters"]
+    for key in entity_key_val:
+	    entity_value = entity_key_val[key]
+	    entity_type = key 
+    
     # constructing the resposne string.
     speech = "Hey, Got your request, Responding from webhook " + "The Intent is: " + intent + ": The entity type is: " + entity_type + ": The entity value is: " + entity_value  
     res = makeWebhookResult(speech)
@@ -72,6 +76,4 @@ if __name__ == '__main__':
 
     print("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
-
-#AWHERE INTEGRATION
+app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
