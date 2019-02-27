@@ -61,9 +61,8 @@ def processRequest(req):
     req_dict = json.loads(request.data)
 
     parameters = req_dict["result"]["parameters"]
-	
-	aWhere = AWhereAPI('02-25', '12-31')
-	aWhere.get_agronomic_url_today()
+    aWhere = AWhereAPI('02-25', '12-31')
+    aWhere.get_agronomic_url_today()
 	
     # constructing the resposne string.
     speech = "Hey, Got your request, Responding from webhook " + "The Intent is: " + intent + ": The entity type is: " + entity_type + ": The entity value is: " + entity_value  
