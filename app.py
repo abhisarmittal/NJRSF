@@ -62,7 +62,7 @@ def settingVariables(req):
 	result = req.get('result')
 	parameters = result.get('parameters')
 	crop = parameters.get('crop')
-    todayDate = parameters.get('date')
+	todayDate = parameters.get('date')
 	
     speech = "Your crop is" + crop + "Today's date is" + date
     res = makeWebhookResult(speech)
