@@ -2,6 +2,22 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import division
+from __future__ import absolute_import
+from builtins import str
+from builtins import bytes
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
+import requests as rq
+import base64
+import pprint
+import json
+import random
+import datetime
+
+from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
 
@@ -43,16 +59,12 @@ def webhook():
 def processRequest(req):
     # Parsing the POST request body into a dictionary for easy access. 
     req_dict = json.loads(request.data)
-    entity_type = ""
-    entity_value = ""
-    # Accessing the fields on the POST request boduy of API.ai invocation of the webhook
-    intent = req_dict["result"]["metadata"]["intentName"]
 
-    entity_key_val = req_dict["result"]["parameters"]
-    for key in entity_key_val:
-	    entity_value = entity_key_val[key]
-	    entity_type = key 
-    
+    parameters = req_dict["result"]["parameters"]
+	
+	aWhere = AWhereAPI('02-25', '12-31')
+	aWhere.get_agronomic_url_today()
+	
     # constructing the resposne string.
     speech = "Hey, Got your request, Responding from webhook " + "The Intent is: " + intent + ": The entity type is: " + entity_type + ": The entity value is: " + entity_value  
     res = makeWebhookResult(speech)
@@ -198,7 +210,3 @@ class AWhereAPI(object):
 		+ ' and your crop growth stage is ' + resultGrowthStage
         else:
             return 'Today\'s date is ' + todaysDate + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
-
-
-aWhere = AWhereAPI('02-25', '12-31')
-aWhere.get_agronomic_url_today()
