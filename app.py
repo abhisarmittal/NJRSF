@@ -40,23 +40,33 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def processRequest(req):
+#def processRequest(req):
     # Parsing the POST request body into a dictionary for easy access. 
-    req_dict = json.loads(request.data)
-    entity_type = ""
-    entity_value = ""
+    #req_dict = json.loads(request.data)
+    #entity_type = ""
+    #entity_value = ""
     # Accessing the fields on the POST request boduy of API.ai invocation of the webhook
-    intent = req_dict["result"]["metadata"]["intentName"]
+    #intent = req_dict["result"]["metadata"]["intentName"]
 
-    entity_key_val = req_dict["result"]["parameters"]
-    for key in entity_key_val:
-	    entity_value = entity_key_val[key]
-	    entity_type = key 
+    #entity_key_val = req_dict["result"]["parameters"]
+    #for key in entity_key_val:
+	    #entity_value = entity_key_val[key]
+	    #entity_type = key 
     
     # constructing the resposne string.
-    speech = "Hey, Got your request, Responding from webhook " + "The Intent is: " + intent + ": The entity type is: " + entity_type + ": The entity value is: " + entity_value  
+    #speech = "Hey, Got your request, Responding from webhook " + "The Intent is: " + intent + ": The entity type is: " + entity_type + ": The entity value is: " + entity_value  
+    #res = makeWebhookResult(speech)
+    #return res
+
+def settingVariables(req):
+    result = req.get('result')
+    parameters = result.get('parameters')
+    crop = parameters.get('crop')
+    todayDate = parameters.get('date')
+	
+    speech = "Your crop is" + crop + "Today's date is" + date
     res = makeWebhookResult(speech)
-    return res
+	return res
 
 
 def makeWebhookResult(speech):
