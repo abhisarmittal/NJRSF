@@ -5,6 +5,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 from __future__ import absolute_import
+from future.standard_library import install_aliases
+install_aliases()
 from builtins import str
 from builtins import bytes
 from future import standard_library
@@ -16,10 +18,6 @@ import pprint
 import json
 import random
 import datetime
-
-from __future__ import print_function
-from future.standard_library import install_aliases
-install_aliases()
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, Request
