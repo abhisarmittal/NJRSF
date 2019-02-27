@@ -61,8 +61,9 @@ def processRequest(req):
 
     #aWhere = AWhereAPI(today_date, date)
     #aWhere.get_agronomic_url_today()
+
     # constructing the resposne string.
-    speech = date + "  " + today_date + "  " + crop + "line 62"
+    speech = date + "  " + today_date + "  " + crop
     res = makeWebhookResult(speech)
     return res
 
