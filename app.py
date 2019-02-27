@@ -46,8 +46,8 @@ def processRequest(req):
     
     parameters = req_dict["result"]["parameters"]
     
-    date = parameters["date"]
-    today_date = parameters["today-date"]
+    date = parameters["date"][5:10]
+    today_date = parameters["today-date"][5:10]
     crop = parameters["crop"]
 	
     # constructing the resposne string.
