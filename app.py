@@ -73,9 +73,68 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = '02-27'
+	self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
+        self.api_secret = 'S9nipeJJ6AVLmRdG'
+        self.base_64_encoded_secret_key = self.encode_secret_and_key(
+            self.api_key, self.api_secret)
+        self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
+	
+    def encode_secret_and_key(self, key, secret):
+        """
+        Docs:
+            http://developer.awhere.com/api/authentication
+        Returns:
+            Returns the base64-encoded {key}:{secret} combination, seperated by a colon.
+        """
+        # Base64 Encode the Secret and Key
+        key_secret = '%s:%s' % (key, secret)
+        #print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
+
+        encoded_key_secret = base64.b64encode(
+            bytes(key_secret, 'utf-8')).decode('ascii')
+
+        #print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
+        return encoded_key_secret
+
+    def get_oauth_token(self, encoded_key_secret):
+        """
+        Demonstrates how to make a HTTP POST request to obtain an OAuth Token
+        Docs: 
+            http://developer.awhere.com/api/authentication
+        Returns: 
+            The access token provided by the aWhere API
+        """
+        auth_url = 'https://api.awhere.com/oauth/token'
+
+        auth_headers = {
+            "Authorization": "Basic %s" % encoded_key_secret,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+        body = "grant_type=client_credentials"
+
+        response = rq.post(auth_url,
+                           headers=auth_headers,
+                           data=body)
+
+        # .json method is a requests lib method that decodes the response
+        return response.json()['access_token']
+
 
     def get_agronomic_url_today(self):
-        return self.THIS_DT
+	
+	response = rq.get(https://api.awhere.com/v2/agronomics/fields/field4/agronomicnorms/05-01,07-12/?limit=1&offset=72,
+                          headers=auth_headers)
+	
+	responseJSON = response.json()
+
+
+        # Display the count of dailyNorms the user has on their account
+        dailyNorms = responseJSON["dailyNorms"]
+        todayDailyNorm = dailyNorms[0]
+
+        accGDD = todayDailyNorm["accumulatedGdd"]["average"]
+        return accGDD
 
 #FUNCTION TO CALL AWHERE
 def integrate():
