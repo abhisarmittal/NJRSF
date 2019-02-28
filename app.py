@@ -199,6 +199,6 @@ class AWhereAPI(object):
             resultGrowthStage = "open flower"
 
         if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + todaysDate + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
+            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
-            return 'Today\'s date is ' + todaysDate + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+            return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
