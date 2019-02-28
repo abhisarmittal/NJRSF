@@ -120,14 +120,11 @@ class AWhereAPI(object):
         # .json method is a requests lib method that decodes the response
         return response.json()['access_token']
 
-
-    def get_agronomic_url_today(self):
-	
+    def get_agronomic_url_today(self):	
         response = rq.get("https://api.awhere.com/v2/agronomics/fields/field4/agronomicnorms/05-01,07-12/?limit=1&offset=72",
                           headers=auth_headers)
 	
         responseJSON = response.json()
-
 
         # Display the count of dailyNorms the user has on their account
         dailyNorms = responseJSON["dailyNorms"]
