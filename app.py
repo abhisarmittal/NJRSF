@@ -63,7 +63,7 @@ def processRequest(req):
     #aWhere.get_agronomic_url_today()
 
     # constructing the resposne string.
-    speech = "GDD for" + crop + "as of" + date 
+    speech = "GDD for " + crop + " as of " + date 
     res = makeWebhookResult(speech)
     return res
 
