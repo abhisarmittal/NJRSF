@@ -126,7 +126,7 @@ class AWhereAPI(object):
         response = rq.get("https://api.awhere.com/v2/agronomics/fields/field4/agronomicnorms/05-01,07-12/?limit=1&offset=72",
                           headers=auth_headers)
 	
-	responseJSON = response.json()
+        responseJSON = response.json()
 
 
         # Display the count of dailyNorms the user has on their account
