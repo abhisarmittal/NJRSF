@@ -182,7 +182,6 @@ class AWhereAPI(object):
         potentialRatio = todayDailyNorm["ppet"]["average"]
         precipitation = pet * potentialRatio
         waterRequirements = pet - precipitation
-        todaysDate = self.END_DT
 	
         #response2 = rq.get(self._forecasts_url, headers=auth_headers)
         #response2JSON = response2.json()
