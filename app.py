@@ -73,9 +73,22 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = '02-27'
+        self.END_DT = '12-31'
+        self.START_DT = '05-01'
+        self.START_YEAR = '2015'
+        self.END_YEAR = '2018'
+        self.THIS_YEAR = '2019'
+        self.FIELD = 'field4'
+        self.NUM_OF_DAYS = self.number_of_days()
+        self._fields_url = 'https://api.awhere.com/v2/fields'
+        self._weather_url = 'https://api.awhere.com/v2/weather/fields'
+        self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/' + self.FIELD + '/agronomicnorms/' + self.START_DT + ',' + self.END_DT + '/?limit=1&offset=' + self.NUM_OF_DAYS
+        self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
+        self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
+        self.api_secret = 'S9nipeJJ6AVLmRdG'
         
     def get_agronomic_url_today(self):
-        return 'hello'
+        return self.THIS_DT
 
 #FUNCTION TO CALL AWHERE
 def integrate():
