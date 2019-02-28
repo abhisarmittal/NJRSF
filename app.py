@@ -79,6 +79,7 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.FIELD = 'field4'
+	self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
         self._weather_url = 'https://api.awhere.com/v2/weather/fields'
         self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/' + self.FIELD + '/agronomicnorms/' + self.START_DT + ',' + self.END_DT + '/?limit=1&offset=' + self.NUM_OF_DAYS
@@ -86,6 +87,13 @@ class AWhereAPI(object):
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
         
+    
+    def number_of_days(self):
+        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
+        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
+        numOfDays = endDate - startDate
+        return str(numOfDays)[0:str(numOfDays).find(' ')+1]
+
     def get_agronomic_url_today(self):
         return self.THIS_DT
 
