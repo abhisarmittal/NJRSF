@@ -73,67 +73,7 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = '02-27'
-        self.END_DT = '12-31'
-        self.START_DT = '05-01'
-        self.START_YEAR = '2015'
-        self.END_YEAR = '2018'
-        self.THIS_YEAR = '2019'
-        self.FIELD = 'field4'
-        self.NUM_OF_DAYS = self.number_of_days()
-        self._fields_url = 'https://api.awhere.com/v2/fields'
-        self._weather_url = 'https://api.awhere.com/v2/weather/fields'
-        self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/' + self.FIELD + '/agronomicnorms/' + self.START_DT + ',' + self.END_DT + '/?limit=1&offset=' + self.NUM_OF_DAYS
-        self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
-        self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
-        self.api_secret = 'S9nipeJJ6AVLmRdG'
-        self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
-        self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
-
-    def encode_secret_and_key(self, key, secret):
-        """
-        Docs:
-            http://developer.awhere.com/api/authentication
-        Returns:
-            Returns the base64-encoded {key}:{secret} combination, seperated by a colon.
-        """
-        # Base64 Encode the Secret and Key
-        key_secret = '%s:%s' % (key, secret)
-        #print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
-
-        encoded_key_secret = base64.b64encode(bytes(key_secret,
-                                                    'utf-8')).decode('ascii')
-
-        #print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
-        return encoded_key_secret
-
-    def get_oauth_token(self, encoded_key_secret):
-        """
-        Demonstrates how to make a HTTP POST request to obtain an OAuth Token
-        Docs: 
-            http://developer.awhere.com/api/authentication
-        Returns: 
-            The access token provided by the aWhere API
-        """
-        auth_url = 'https://api.awhere.com/oauth/token'
-
-        auth_headers = {
-            "Authorization": "Basic %s" % encoded_key_secret,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-
-        body = "grant_type=client_credentials"
-
-        response = rq.post(auth_url, headers=auth_headers, data=body)
-
-        # .json method is a requests lib method that decodes the response
-        return response.json()['access_token']
-
-    def number_of_days(self):
-        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
-        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
-        numOfDays = endDate - startDate
-        return str(numOfDays)[0:str(numOfDays).find(' ')+1]
-
+        
     def get_agronomic_url_today(self):
         return 'hello'
 
