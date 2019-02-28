@@ -57,7 +57,7 @@ def processRequest(req):
     date = parameters["date"][5:10]
     crop = parameters["crop"]
 
-    #aWhere = AWhereAPI()
+    aWhere = AWhereAPI()
     #aWhere.get_agronomic_url_today()
 
     # constructing the resposne string.
@@ -75,14 +75,6 @@ def makeWebhookResult(speech):
         "displayText": speech,
         "source": "Build conversational interface for your app in 10 minutes."
     }
-
-
-if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
-
-    print("Starting app on port %d" % port)
-
-    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
 
 #AWHERE:
 
@@ -199,3 +191,12 @@ class AWhereAPI(object):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
             return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+
+
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+
+    print("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
