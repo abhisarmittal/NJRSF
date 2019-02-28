@@ -58,7 +58,7 @@ def processRequest(req):
     crop = parameters["crop"]
 
     # constructing the resposne string.
-    speech = test()
+    speech = test() + 'new'
     res = makeWebhookResult(speech)
     return res
 
