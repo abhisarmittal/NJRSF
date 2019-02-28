@@ -109,8 +109,7 @@ class AWhereAPI(object):
         self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
-        self.base_64_encoded_secret_key = self.encode_secret_and_key(
-            self.api_key, self.api_secret)
+        self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
         self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
 
     def encode_secret_and_key(self, key, secret):
