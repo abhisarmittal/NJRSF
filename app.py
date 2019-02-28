@@ -135,47 +135,7 @@ class AWhereAPI(object):
         return str(numOfDays)[0:str(numOfDays).find(' ')+1]
 
     def get_agronomic_url_today(self):
-        """
-        Performs a HTTP GET request to obtain Agronomic Norms
-        Docs: 
-            1. Agronomic: https://developer.awhere.com/api/reference/agronomics/norms
-        """
-        # Setup the HTTP request headers
-        auth_headers = {
-            "Authorization": "Bearer %s" % self.auth_token,
-        }
-
-        # Perform the HTTP request to obtain the Agronomic Norms for the Field
-        response = rq.get(self._agronomic_url, headers=auth_headers)
-
-        responseJSON = response.json()
-        todayDailyNorm = responseJSON["dailyNorms"][0]
-
-        accGDD = todayDailyNorm["accumulatedGdd"]["average"]
-        pet = todayDailyNorm["pet"]["average"]
-        potentialRatio = todayDailyNorm["ppet"]["average"]
-        precipitation = pet * potentialRatio
-        waterRequirements = pet - precipitation
-	
-        #response2 = rq.get(self._forecasts_url, headers=auth_headers)
-        #response2JSON = response2.json()
-
-        rainy=False
-        #forecast = response2JSON['forecast']
-        #condition = forecast[0]['conditionsText']
-        #if condition.find('No Rain') >= 0:
-            #rainy = False
-
-        if accGDD < 1:
-            resultGrowthStage = "emergence"
-
-        elif accGDD > 1:
-            resultGrowthStage = "open flower"
-
-        if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
-        else:
-            return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+        return 'hello'
 
 #FUNCTION TO CALL AWHERE
 def integrate():
