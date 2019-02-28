@@ -66,6 +66,12 @@ def processRequest(req):
     res = makeWebhookResult(speech)
     return res
 
+class TestClass(object):
+    def __init__(self):
+	speech = 'hello'
+    def test(self):
+	return speech
+
 
 def makeWebhookResult(speech):
     print("Response:")
@@ -77,13 +83,6 @@ def makeWebhookResult(speech):
         "source": "Build conversational interface for your app in 10 minutes."
     }
 
-#AWHERE:
-
-class TestClass(object):
-    def __init__(self):
-	speech = 'hello'
-    def test(self):
-	return speech
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
