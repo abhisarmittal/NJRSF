@@ -68,9 +68,9 @@ def processRequest(req):
 
 class TestClass(object):
     def __init__(self):
-	speech = 'hello'
+	self.speech = 'hello'
     def test(self):
-	return speech
+	return self.speech
 
 
 def makeWebhookResult(speech):
