@@ -31,8 +31,6 @@ from flask import render_template
 # Flask app should start in global layout
 
 app = Flask(__name__)
-
-test = TestClass()
 	
 @app.route('/hello')
 def hello():
@@ -60,15 +58,12 @@ def processRequest(req):
     crop = parameters["crop"]
 
     # constructing the resposne string.
-    speech = test.test() 
+    speech = test() 
     res = makeWebhookResult(speech)
     return res
 
-class TestClass(object):
-    def __init__(self):
-	self.testSpeech = 'hello'
-    def test(self):
-	return 'hello'
+def test():
+    return 'hello'
 
 
 def makeWebhookResult(speech):
