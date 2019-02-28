@@ -59,7 +59,7 @@ def processRequest(req):
     date = parameters["date"][5:10]
     crop = parameters["crop"]
 
-    aWhere = AWhereAPI()
+    #aWhere = AWhereAPI()
     #aWhere.get_agronomic_url_today()
 
     # constructing the resposne string.
