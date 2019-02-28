@@ -175,8 +175,7 @@ class AWhereAPI(object):
         response = rq.get(self._agronomic_url, headers=auth_headers)
 
         responseJSON = response.json()
-        dailyNorms = responseJSON["dailyNorms"]
-        todayDailyNorm = dailyNorms[dailyNormCount - 1]
+        todayDailyNorm = responseJSON["dailyNorms"][0]
 
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
         pet = todayDailyNorm["pet"]["average"]
