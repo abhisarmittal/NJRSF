@@ -58,19 +58,17 @@ def processRequest(req):
     crop = parameters["crop"]
 
     test = TestClass()
-    test.test()
-    #aWhere.get_agronomic_url_today()
 
     # constructing the resposne string.
-    speech = "GDD for " + crop + " as of " + date 
+    speech = test.test() 
     res = makeWebhookResult(speech)
     return res
 
 class TestClass(object):
     def __init__(self):
-	self.speech = 'hello'
+	self.testSpeech = 'hello'
     def test(self):
-	return self.speech
+	return 'hello'
 
 
 def makeWebhookResult(speech):
