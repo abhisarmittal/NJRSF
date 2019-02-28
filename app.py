@@ -20,6 +20,7 @@ import json
 import os
 import random
 import datetime
+from datetime import date
 
 from flask import Flask
 from flask import request
@@ -89,26 +90,26 @@ if __name__ == '__main__':
 #AWHERE:
 
 class AWhereAPI(object):
-    def __init__(self, this_dt, end_dt):
+    def __init__(self):
         """
         Initializes the AWhereAPI class, which is used to perform HTTP requests 
         to the aWhere V2 API.
         elf.        Docs:
             http://developer.awhere.com/api/reference
         """
-        self.END_DT = end_dt
-        self.THIS_DT = this_dt
-        #self.END_DT = datetime.datetime.today().strftime('%m-%d')
-        self.START_DT = '02-10'
+        
+        self.THIS_DT = '02-27'
+        self.END_DT = '12-31'
+        self.START_DT = '05-01'
         self.START_YEAR = '2015'
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
+        self.FIELD = 'field4'
+        self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
         self._weather_url = 'https://api.awhere.com/v2/weather/fields'
-        #self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/field3/agronomicnorms/08-01,12-31/years/2010,2014'
-        self._agronomic_url_today = 'https://api.awhere.com/v2/agronomics/fields/field4/agronomicnorms'
-        #self._forecasts_url_today = 'https://api.awhere.com/v2/weather/fields/field1/forecasts/2019-02-21'
-        self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/field1/forecasts'
+        self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/' + self.FIELD + '/agronomicnorms/' + self.START_DT + ',' + self.END_DT + '/?limit=1&offset=' + self.NUM_OF_DAYS
+        self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
         self.base_64_encoded_secret_key = self.encode_secret_and_key(
@@ -154,6 +155,12 @@ class AWhereAPI(object):
         # .json method is a requests lib method that decodes the response
         return response.json()['access_token']
 
+    def number_of_days(self):
+        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
+        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
+        numOfDays = endDate - startDate
+        return str(numOfDays)[0:str(numOfDays).find(' ')+1]
+
     def get_agronomic_url_today(self):
         """
         Performs a HTTP GET request to obtain Agronomic Norms
@@ -166,16 +173,9 @@ class AWhereAPI(object):
         }
 
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
-        response = rq.get(
-            self._agronomic_url_today + '/' + self.START_DT + ',' +
-            self.END_DT + '/years/' + self.START_YEAR + ',' +
-            self.END_YEAR,
-            headers=auth_headers)
+        response = rq.get(self._agronomic_url, headers=auth_headers)
 
         responseJSON = response.json()
-
-        # Display the count of dailyNorms the user has on their account
-        dailyNormCount = len(responseJSON["dailyNorms"])
         dailyNorms = responseJSON["dailyNorms"]
         todayDailyNorm = dailyNorms[dailyNormCount - 1]
 
@@ -186,14 +186,14 @@ class AWhereAPI(object):
         waterRequirements = pet - precipitation
         todaysDate = self.END_DT
 	
-        response2 = rq.get(
-            self._forecasts_url + '/' + self.THIS_DT, headers=auth_headers)
-        response2JSON = response2.json()
+        #response2 = rq.get(self._forecasts_url, headers=auth_headers)
+        #response2JSON = response2.json()
 
-        forecast = response2JSON['forecast']
-        condition = forecast[0]['conditionsText']
-        if condition.find('No Rain') >= 0:
-            rainy = False
+        rainy=False
+        #forecast = response2JSON['forecast']
+        #condition = forecast[0]['conditionsText']
+        #if condition.find('No Rain') >= 0:
+            #rainy = False
 
         if accGDD < 1:
             resultGrowthStage = "emergence"
@@ -202,7 +202,6 @@ class AWhereAPI(object):
             resultGrowthStage = "open flower"
 
         if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + todaysDate + '. Your water requirements for your cotton crops are: ' + str(waterRequirements)
-            + ' and your crop growth stage is ' + resultGrowthStage
+            return 'Today\'s date is ' + todaysDate + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
             return 'Today\'s date is ' + todaysDate + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
