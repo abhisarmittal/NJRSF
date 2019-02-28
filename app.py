@@ -32,6 +32,8 @@ from flask import render_template
 
 app = Flask(__name__)
 
+test = TestClass()
+	
 @app.route('/hello')
 def hello():
     return render_template('index.html')
@@ -56,8 +58,6 @@ def processRequest(req):
     
     date = parameters["date"][5:10]
     crop = parameters["crop"]
-
-    test = TestClass()
 
     # constructing the resposne string.
     speech = test.test() 
