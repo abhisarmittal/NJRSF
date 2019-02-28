@@ -58,7 +58,7 @@ def processRequest(req):
     crop = parameters["crop"]
 
     # constructing the resposne string.
-    speech = test() + 'new'
+    speech = test()
     res = makeWebhookResult(speech)
     return res
 
@@ -72,16 +72,6 @@ def test():
     test = TestClass()
     return test.test()
 
-
-def makeWebhookResult(speech):
-    print("Response:")
-    print(speech)
-
-    return {
-        "speech": speech,
-        "displayText": speech,
-        "source": "Build conversational interface for your app in 10 minutes."
-    }
 
 
 if __name__ == '__main__':
