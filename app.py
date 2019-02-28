@@ -73,7 +73,7 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = '02-27'
-	self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
+        self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
         self.base_64_encoded_secret_key = self.encode_secret_and_key(
             self.api_key, self.api_secret)
