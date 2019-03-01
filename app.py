@@ -79,8 +79,7 @@ class AWhereAPI(object):
         self.THIS_DT = '02-27'
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
-        self.base_64_encoded_secret_key = self.encode_secret_and_key(
-            self.api_key, self.api_secret)
+        self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
         self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
 	
     def encode_secret_and_key(self, key, secret):
@@ -141,7 +140,6 @@ class AWhereAPI(object):
 def integrate():
     awhere = AWhereAPI()
     return awhere.get_agronomic_url_today()
-
 
 def makeWebhookResult(speech):
     print("Response:")
