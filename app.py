@@ -188,11 +188,13 @@ class AWhereAPI(object):
         }
         print('\nget_agronomic_url_today:: Headers: %s' % auth_headers)
         sys.stdout.flush()
+	
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
         response = rq.get(self._agronomic_url, headers=auth_headers)
         responseJSON = response.json()
         print('\nget_agronomic_url_today:: ResponseJSON: %s' % responseJSON)
         sys.stdout.flush()
+	
         todayDailyNorm = responseJSON["dailyNorms"][0]
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
         pet = todayDailyNorm["pet"]["average"]
@@ -203,17 +205,28 @@ class AWhereAPI(object):
         sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
         sys.stdout.flush()
+	
         response2 = rq.get(self._forecasts_url, headers=auth_headers)
         response2JSON = response2.json()
-        rainy=False
+	print('\nget_agronomic_url_today:: Response2JSON: %s' % response2JSON)
+	
         forecast = response2JSON['forecast']
         condition = forecast[0]['conditionsText']
         if condition.find('No Rain') >= 0:
             rainy = False
-        if accGDD < 1:
-            resultGrowthStage = "emergence"
-        elif accGDD > 1:
-            resultGrowthStage = "open flower"
+	
+	if self.FIELD == 'field4':	#if crop is cotton
+            if accGDD >= 28 and accGDD < 306:
+                resultGrowthStage = "emergence"
+            if accGDD >= 306 and accGDD < 528:
+                resultGrowthStage = "first-square"
+            if accGDD >= 528 and accGDD < 1194:
+                resultGrowthStage = "first-flower"
+            if accGDD >= 1194 and accGDD < 1444:
+                resultGrowthStage = "open-bolli"
+            if accGDD >= 1444:
+                resultGrowthStage = "harvest"
+		
         if (potentialRatio < 1) & (not rainy):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' mm. Your crop growth stage is ' + resultGrowthStage + '.'
         else:
