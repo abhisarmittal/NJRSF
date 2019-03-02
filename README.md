@@ -18,3 +18,15 @@ app-awhere is with awhere integration. It is working.
 app-awhere2 is attempt to add if statements in awhere integration.
 
 ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
+
+Things to change:
+
+round.
+
+if statements for gdd.
+
+if statement for field.
+
+clean up the speech response.
+
+if before planting season, dont work.
