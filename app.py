@@ -66,6 +66,24 @@ def processRequest(req):
     res = makeWebhookResult(speech)
     return res
 
+#FUNCTION TO CALL AWHERE
+def integrate():
+    awhere = AWhereAPI()
+    #return awhere.get_agronomic_url_today()
+    return 'hello'
+
+
+def makeWebhookResult(speech):
+    print("Response:")
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        "source": "Build conversational interface for your app in 10 minutes."
+    }
+
+
 #AWHERE
 class AWhereAPI(object):
     def __init__(self):
@@ -90,9 +108,19 @@ class AWhereAPI(object):
         self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
+        """
         self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
         self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
+        """
 
+    def number_of_days(self):
+        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
+        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
+        numOfDays = endDate - startDate
+        numOfDaysStr = str(numOfDays)[0:str(numOfDays).find(' ')+1]
+        print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
+        return numOfDaysStr
+'''
     def encode_secret_and_key(self, key, secret):
         """
         Docs:
@@ -133,15 +161,6 @@ class AWhereAPI(object):
         responseJSON = response.json()
         print('\nget_oauth_token:: ResponseJSON: %s' % responseJSON)
         return responseJSON['access_token']
-
-
-    def number_of_days(self):
-        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
-        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
-        numOfDays = endDate - startDate
-        numOfDaysStr = str(numOfDays)[0:str(numOfDays).find(' ')+1]
-        print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
-        return numOfDaysStr
 
     def get_agronomic_url_today(self):
         """
@@ -186,23 +205,7 @@ class AWhereAPI(object):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
             return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
-
-
-#FUNCTION TO CALL AWHERE
-def integrate():
-    awhere = AWhereAPI()
-    return awhere.get_agronomic_url_today()
-
-def makeWebhookResult(speech):
-    print("Response:")
-    print(speech)
-
-    return {
-        "speech": speech,
-        "displayText": speech,
-        "source": "Build conversational interface for your app in 10 minutes."
-    }
-
+'''
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
