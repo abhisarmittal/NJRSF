@@ -9,16 +9,10 @@ deploy to heroku
 https://heroku.com/deploy?template=https://github.com/yuvanshu/gddandpetscienceproject2019
 
 
-app.py is rewritable for testing purposes; 
+app.py is rewritable for testing purposes; as of 6:05 on 3/2/19, it is holding app-awhere.py
 
-app-noIntegration is a webhook which works completely fine without integration
+app-noIntegration.py is a webhook template which works completely fine without integration
 
-app-awhere is with awhere integration. It is working.
-
-app-awhere2 is attempt to add if statements in awhere integration.
+app-awhere.py is with awhere integration. It is working.
 
 ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
-
-Things to change:
-
-if statements for gdd.
