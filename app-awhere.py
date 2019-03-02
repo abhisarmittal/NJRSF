@@ -62,7 +62,8 @@ def processRequest(req):
     
     date = parameters["date"][5:10]
     crop = parameters["crop"]
-
+    elif not (crop == 'cotton' or crop == 'corn'):
+        speech = 'Crop not supported yet!'
     # constructing the resposne string.
     speech = integrate(date, crop)
     res = makeWebhookResult(speech)
