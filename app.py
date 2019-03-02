@@ -70,7 +70,7 @@ def processRequest(req):
 def integrate():
     awhere = AWhereAPI()
     #return awhere.get_agronomic_url_today()
-    return 'hello' + crop + date
+    return 'hello'
 
 
 def makeWebhookResult(speech):
