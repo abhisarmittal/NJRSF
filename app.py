@@ -47,6 +47,7 @@ def webhook():
     res = processRequest(req)
     res = json.dumps(res, indent=4)
     print(res)
+    sys.stdout.flush()
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
@@ -66,16 +67,11 @@ def processRequest(req):
     res = makeWebhookResult(speech)
     return res
 
-#FUNCTION TO CALL AWHERE
-def integrate():
-    awhere = AWhereAPI()
-    #return awhere.get_agronomic_url_today()
-    return 'hello' + crop + date
-
-
 def makeWebhookResult(speech):
     print("Response:")
+    sys.stdout.flush()
     print(speech)
+    sys.stdout.flush()
 
     return {
         "speech": speech,
@@ -83,6 +79,11 @@ def makeWebhookResult(speech):
         "source": "Build conversational interface for your app in 10 minutes."
     }
 
+#FUNCTION TO CALL AWHERE
+def integrate():
+    awhere = AWhereAPI()
+    #return awhere.get_agronomic_url_today()
+    return 'hello'
 
 #AWHERE
 class AWhereAPI(object):
@@ -119,6 +120,7 @@ class AWhereAPI(object):
         numOfDays = endDate - startDate
         numOfDaysStr = str(numOfDays)[0:str(numOfDays).find(' ')+1]
         print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
+        sys.stdout.flush()
         return numOfDaysStr
 '''
     def encode_secret_and_key(self, key, secret):
@@ -131,13 +133,12 @@ class AWhereAPI(object):
         # Base64 Encode the Secret and Key
         key_secret = '%s:%s' % (key, secret)
         print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
-
+        sys.stdout.flush()
         encoded_key_secret = base64.b64encode(bytes(key_secret,
                                                     'utf-8')).decode('ascii')
-
         print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
+        sys.stdout.flush()
         return encoded_key_secret
-
     def get_oauth_token(self, encoded_key_secret):
         """
         Demonstrates how to make a HTTP POST request to obtain an OAuth Token
@@ -147,19 +148,20 @@ class AWhereAPI(object):
             The access token provided by the aWhere API
         """
         auth_url = 'https://api.awhere.com/oauth/token'
-
         auth_headers = {
             "Authorization": "Basic %s" % encoded_key_secret,
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-
         body = "grant_type=client_credentials"
         print('\nget_oauth_token:: Headers: %s' % auth_headers)
+        sys.stdout.flush()
         print('\nget_oauth_token:: Body: %s' % body)
+        sys.stdout.flush()
         response = rq.post(auth_url, headers=auth_headers, data=body)
         # .json method is a requests lib method that decodes the response
         responseJSON = response.json()
         print('\nget_oauth_token:: ResponseJSON: %s' % responseJSON)
+        sys.stdout.flush()
         return responseJSON['access_token']
 
     def get_agronomic_url_today(self):
@@ -173,34 +175,33 @@ class AWhereAPI(object):
             "Authorization": "Bearer %s" % self.auth_token,
         }
         print('\nget_agronomic_url_today:: Headers: %s' % auth_headers)
+        sys.stdout.flush()
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
         response = rq.get(self._agronomic_url, headers=auth_headers)
         responseJSON = response.json()
         print('\nget_agronomic_url_today:: ResponseJSON: %s' % responseJSON)
+        sys.stdout.flush()
         todayDailyNorm = responseJSON["dailyNorms"][0]
-
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
         pet = todayDailyNorm["pet"]["average"]
         potentialRatio = todayDailyNorm["ppet"]["average"]
         precipitation = pet * potentialRatio
         waterRequirements = pet - precipitation
         print('\nget_agronomic_url_today:: precipitation: %f' % precipitation)
+        sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
+        sys.stdout.flush()
         #response2 = rq.get(self._forecasts_url, headers=auth_headers)
         #response2JSON = response2.json()
-
         rainy=False
         #forecast = response2JSON['forecast']
         #condition = forecast[0]['conditionsText']
         #if condition.find('No Rain') >= 0:
             #rainy = False
-
         if accGDD < 1:
             resultGrowthStage = "emergence"
-
         elif accGDD > 1:
             resultGrowthStage = "open flower"
-
         if (potentialRatio < 1) & (not rainy):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
