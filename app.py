@@ -215,7 +215,8 @@ class AWhereAPI(object):
         if condition.find('No Rain') >= 0:
             rainy = False
 	
-	if self.FIELD == 'field4':	#if crop is cotton
+        #if crop is cotton
+        if self.FIELD == 'field4':
             if accGDD >= 28 and accGDD < 306:
                 resultGrowthStage = "emergence"
             if accGDD >= 306 and accGDD < 528:
