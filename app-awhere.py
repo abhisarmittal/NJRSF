@@ -76,7 +76,7 @@ class AWhereAPI(object):
             http://developer.awhere.com/api/reference
         """
         
-        self.THIS_DT = '02-27'
+        self.THIS_DT = datetime.datetime.today().strftime('%m-%d')
         self.END_DT = '12-31'
         self.START_DT = '05-01'
         self.START_YEAR = '2015'
@@ -102,12 +102,12 @@ class AWhereAPI(object):
         """
         # Base64 Encode the Secret and Key
         key_secret = '%s:%s' % (key, secret)
-        #print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
+        print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
 
         encoded_key_secret = base64.b64encode(bytes(key_secret,
                                                     'utf-8')).decode('ascii')
 
-        #print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
+        print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
         return encoded_key_secret
 
     def get_oauth_token(self, encoded_key_secret):
@@ -126,17 +126,22 @@ class AWhereAPI(object):
         }
 
         body = "grant_type=client_credentials"
-
+        print('\nget_oauth_token:: Headers: %s' % auth_headers)
+        print('\nget_oauth_token:: Body: %s' % body)
         response = rq.post(auth_url, headers=auth_headers, data=body)
-
         # .json method is a requests lib method that decodes the response
-        return response.json()['access_token']
+        responseJSON = response.json()
+        print('\nget_oauth_token:: ResponseJSON: %s' % responseJSON)
+        return responseJSON['access_token']
+
 
     def number_of_days(self):
         startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
         endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
         numOfDays = endDate - startDate
-        return str(numOfDays)[0:str(numOfDays).find(' ')+1]
+        numOfDaysStr = str(numOfDays)[0:str(numOfDays).find(' ')+1]
+        print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
+        return numOfDaysStr
 
     def get_agronomic_url_today(self):
         """
@@ -148,11 +153,11 @@ class AWhereAPI(object):
         auth_headers = {
             "Authorization": "Bearer %s" % self.auth_token,
         }
-
+        print('\nget_agronomic_url_today:: Headers: %s' % auth_headers)
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
         response = rq.get(self._agronomic_url, headers=auth_headers)
-
         responseJSON = response.json()
+        print('\nget_agronomic_url_today:: ResponseJSON: %s' % responseJSON)
         todayDailyNorm = responseJSON["dailyNorms"][0]
 
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
@@ -160,7 +165,8 @@ class AWhereAPI(object):
         potentialRatio = todayDailyNorm["ppet"]["average"]
         precipitation = pet * potentialRatio
         waterRequirements = pet - precipitation
-	
+        print('\nget_agronomic_url_today:: precipitation: %f' % precipitation)
+        print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
         #response2 = rq.get(self._forecasts_url, headers=auth_headers)
         #response2JSON = response2.json()
 
