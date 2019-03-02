@@ -101,7 +101,7 @@ class AWhereAPI(object):
         self.START_YEAR = '2015'
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
-	self.CROP = crop
+        self.CROP = crop
         self.FIELD = 'field4'
         self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
