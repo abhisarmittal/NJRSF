@@ -66,7 +66,7 @@ def processRequest(req):
     # checking for faults in parameters
     startDt = date(2018, 5, 1)
     endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
-    if startDate>endDate:
+    if startDt>endDt:
         speech = 'Growing season did not start yet!'
     elif not (crop == 'cotton' or crop == 'corn'):
         speech = 'Crop not supported yet!'
