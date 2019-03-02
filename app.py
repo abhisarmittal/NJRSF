@@ -68,9 +68,9 @@ def processRequest(req):
 
 #FUNCTION TO CALL AWHERE (added crop and date to hello to confirm if the parameters are returned in dialoflow)
 def integrate():
-    awhere = AWhereAPI()
+    #awhere = AWhereAPI()
     #return awhere.get_agronomic_url_today()
-    return 'hello'
+    return 'hello' + crop + date
 
 
 def makeWebhookResult(speech):
