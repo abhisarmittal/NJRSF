@@ -62,6 +62,11 @@ def processRequest(req):
     
     date = parameters["date"][5:10]
     crop = parameters["crop"]
+
+    startDate = date(2018, int(date[0:2]), int(date[3:5]))
+    endDate = date(2018, 05, 01)
+    if startDate>endDate:
+        speech = 'Growing season did not start yet!'
     elif not (crop == 'cotton' or crop == 'corn'):
         speech = 'Crop not supported yet!'
     # constructing the resposne string.
