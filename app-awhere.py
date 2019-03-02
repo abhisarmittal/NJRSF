@@ -66,13 +66,6 @@ def processRequest(req):
     res = makeWebhookResult(speech)
     return res
 
-#FUNCTION TO CALL AWHERE
-def integrate():
-    awhere = AWhereAPI()
-    #return awhere.get_agronomic_url_today()
-    return 'hello'
-
-
 def makeWebhookResult(speech):
     print("Response:")
     print(speech)
@@ -83,6 +76,11 @@ def makeWebhookResult(speech):
         "source": "Build conversational interface for your app in 10 minutes."
     }
 
+#FUNCTION TO CALL AWHERE
+def integrate():
+    awhere = AWhereAPI()
+    #return awhere.get_agronomic_url_today()
+    return 'hello'
 
 #AWHERE
 class AWhereAPI(object):
