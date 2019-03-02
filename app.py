@@ -198,7 +198,7 @@ class AWhereAPI(object):
         pet = todayDailyNorm["pet"]["average"]
         potentialRatio = todayDailyNorm["ppet"]["average"]
         precipitation = pet * potentialRatio
-        waterRequirements = pet - precipitation
+        waterRequirements = float("{0:.2f}".format(pet - precipitation))
         print('\nget_agronomic_url_today:: precipitation: %f' % precipitation)
         sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
