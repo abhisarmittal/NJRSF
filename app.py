@@ -68,7 +68,7 @@ def processRequest(req):
     endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
     if startDt>endDt:
         speech = 'Growing season did not start yet!'
-    elif not (crop == 'cotton' or crop == 'corn'):
+    elif not (parameterCrop == 'cotton' or parameterCrop == 'corn'):
         speech = 'Crop not supported yet!'
 
     # constructing the resposne string.
