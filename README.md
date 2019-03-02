@@ -25,8 +25,4 @@ round.
 
 if statements for gdd.
 
-if statement for field.
-
 clean up the speech response.
-
-if before planting season, dont work.
