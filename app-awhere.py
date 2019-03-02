@@ -187,6 +187,7 @@ class AWhereAPI(object):
         else:
             return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
 
+
 #FUNCTION TO CALL AWHERE
 def integrate():
     awhere = AWhereAPI()
