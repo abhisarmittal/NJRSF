@@ -8,5 +8,11 @@ deploy to heroku
 
 https://heroku.com/deploy?template=https://github.com/yuvanshu/gddandpetscienceproject2019
 
-app2.py is the original file that remains untouched. Date: 2/26/19
-app.py is the testing file Date: 2/26/19
+
+app.py is rewritable for testing purposes; 
+
+app-noIntegration is a webhook which works completely fine without integration
+
+app-awhere is attempting to make an awhere integration. As of 3:45 on 3/2/19, it is working. However, most of the awhere class is commented out.
+
+ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
