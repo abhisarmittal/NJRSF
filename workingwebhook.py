@@ -56,14 +56,10 @@ def processRequest(req):
     parameters = req_dict["result"]["parameters"]
     
     date = parameters["date"]
-    #today_date = parameters["today-date"]
     crop = parameters["crop"]
 
-    #aWhere = AWhereAPI(today_date, date)
-    #aWhere.get_agronomic_url_today()
-
     # constructing the resposne string.
-    speech = "GDD for" + crop + "as of" + date 
+    speech = "GDD for " + crop + " as of " + date 
     res = makeWebhookResult(speech)
     return res
 
@@ -84,4 +80,4 @@ if __name__ == '__main__':
 
     print("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
+    app.run(debug=True, port=port, host='0.0.0.0', threaded=True)
