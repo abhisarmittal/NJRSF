@@ -67,27 +67,6 @@ def processRequest(req):
     return res
 
 #AWHERE
-from __future__ import print_function
-from future.standard_library import install_aliases
-install_aliases()
-
-from urllib.parse import urlparse, urlencode
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
-
-from builtins import str
-from builtins import bytes
-from builtins import object
-
-import requests as rq
-import base64
-import pprint
-import json
-import os
-import random
-import datetime
-from datetime import date
-
 class AWhereAPI(object):
     def __init__(self):
         """
