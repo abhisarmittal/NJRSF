@@ -72,7 +72,7 @@ def processRequest(req):
         speech = 'Crop not supported yet!'
 
     # constructing the resposne string.
-    else
+    else:
         speech = integrate(parameterDate, parameterCrop)
     res = makeWebhookResult(speech)
     return res
