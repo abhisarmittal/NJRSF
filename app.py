@@ -217,7 +217,7 @@ class AWhereAPI(object):
 	
         #if crop is cotton
         if self.CROP == 'cotton':
-            if accDGD>=0 and accGDD <28:
+            if accGDD>=0 and accGDD <28:
                 resultGrowthStage = 'planted'
             elif accGDD >= 28 and accGDD < 306:
                 resultGrowthStage = "emergence"
