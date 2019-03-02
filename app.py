@@ -64,7 +64,7 @@ def processRequest(req):
     crop = parameters["crop"]
 
     # constructing the resposne string.
-    speech = integrate()
+    speech = integrate(date, crop)
     res = makeWebhookResult(speech)
     return res
 
@@ -81,8 +81,8 @@ def makeWebhookResult(speech):
     }
 
 #FUNCTION TO CALL AWHERE
-def integrate():
-    awhere = AWhereAPI('12-31', 'cotton')
+def integrate(date, crop):
+    awhere = AWhereAPI(date, crop)
     return awhere.get_agronomic_url_today()
 
 #AWHERE
