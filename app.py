@@ -217,17 +217,34 @@ class AWhereAPI(object):
 	
         #if crop is cotton
         if self.CROP == 'cotton':
-            if accGDD >= 28 and accGDD < 306:
+            if accGGD>=0 and accGDD <28:
+                resultGrowthStage = 'planted'
+            elif accGDD >= 28 and accGDD < 306:
                 resultGrowthStage = "emergence"
-            if accGDD >= 306 and accGDD < 528:
+            elif accGDD >= 306 and accGDD < 528:
                 resultGrowthStage = "first-square"
-            if accGDD >= 528 and accGDD < 1194:
+            elif accGDD >= 528 and accGDD < 1194:
                 resultGrowthStage = "first-flower"
-            if accGDD >= 1194 and accGDD < 1444:
+            elif accGDD >= 1194 and accGDD < 1444:
                 resultGrowthStage = "open-bolli"
-            if accGDD >= 1444:
+            elif accGDD >= 1444:
                 resultGrowthStage = "harvest"
-		
+
+        #if crop is corn
+        if self.CROP == 'corn':
+            if accGGD>=0 and accGDD <65:
+                resultGrowthStage = 'planted'
+            elif accGDD >= 65 and accGDD < 740:
+                resultGrowthStage = "emergence"
+            elif accGDD >= 740 and accGDD < 1135:
+                resultGrowthStage = "rapid growth"
+            elif accGDD >= 1135 and accGDD < 1160:
+                resultGrowthStage = "pollination"
+            elif accGDD >= 1160 and accGDD < 1660:
+                resultGrowthStage = "grain fill"
+            elif accGDD >= 1660:
+                resultGrowthStage = "harvest"
+
         if (potentialRatio < 1) & (not rainy):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' mm. Your crop growth stage is ' + resultGrowthStage + '.'
         else:
