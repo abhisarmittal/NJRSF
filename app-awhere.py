@@ -102,7 +102,10 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
-        self.FIELD = 'field4'
+	if self.CROP == 'cotton'
+            self.FIELD = 'field4'
+        elif self.CROP == 'corn'
+            self.FIELD = 'field1'
         self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
         self._weather_url = 'https://api.awhere.com/v2/weather/fields'
