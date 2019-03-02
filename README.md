@@ -21,8 +21,6 @@ ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT REN
 
 Things to change:
 
-round.
-
 if statements for gdd.
 
 clean up the speech response.
