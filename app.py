@@ -164,7 +164,6 @@ class AWhereAPI(object):
         sys.stdout.flush()
         return responseJSON['access_token']
 
-'''
     def get_agronomic_url_today(self):
         """
         Performs a HTTP GET request to obtain Agronomic Norms
@@ -207,7 +206,6 @@ class AWhereAPI(object):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
         else:
             return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
-'''
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
