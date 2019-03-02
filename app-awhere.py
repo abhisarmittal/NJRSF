@@ -191,13 +191,13 @@ class AWhereAPI(object):
         sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
         sys.stdout.flush()
-        #response2 = rq.get(self._forecasts_url, headers=auth_headers)
-        #response2JSON = response2.json()
+        response2 = rq.get(self._forecasts_url, headers=auth_headers)
+        response2JSON = response2.json()
         rainy=False
-        #forecast = response2JSON['forecast']
-        #condition = forecast[0]['conditionsText']
-        #if condition.find('No Rain') >= 0:
-            #rainy = False
+        forecast = response2JSON['forecast']
+        condition = forecast[0]['conditionsText']
+        if condition.find('No Rain') >= 0:
+            rainy = False
         if accGDD < 1:
             resultGrowthStage = "emergence"
         elif accGDD > 1:
