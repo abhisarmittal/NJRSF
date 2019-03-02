@@ -60,17 +60,20 @@ def processRequest(req):
     
     parameters = req_dict["result"]["parameters"]
     
-    date = parameters["date"][5:10]
-    crop = parameters["crop"]
+    parameterDate = parameters["date"][5:10]
+    parameterCrop = parameters["crop"]
 
-    startDate = date(2018, int(date[0:2]), int(date[3:5]))
-    endDate = date(2018, 05, 01)
+    # checking for faults in parameters
+    startDt = date(2018, 05, 01)
+    endDt = date(2018, int(date[0:2]), int(date[3:5]))
     if startDate>endDate:
         speech = 'Growing season did not start yet!'
     elif not (crop == 'cotton' or crop == 'corn'):
         speech = 'Crop not supported yet!'
+
     # constructing the resposne string.
-    speech = integrate(date, crop)
+    else
+        speech = integrate(parameterDate, parameterCrop)
     res = makeWebhookResult(speech)
     return res
 
