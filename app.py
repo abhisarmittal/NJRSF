@@ -60,11 +60,20 @@ def processRequest(req):
     
     parameters = req_dict["result"]["parameters"]
     
-    date = parameters["date"][5:10]
-    crop = parameters["crop"]
+    parameterDate = parameters["date"][5:10]
+    parameterCrop = parameters["crop"]
+
+    # checking for faults in parameters
+    startDt = date(2018, 05, 01)
+    endDt = date(2018, int(date[0:2]), int(date[3:5]))
+    if startDate>endDate:
+        speech = 'Growing season did not start yet!'
+    elif not (crop == 'cotton' or crop == 'corn'):
+        speech = 'Crop not supported yet!'
 
     # constructing the resposne string.
-    speech = integrate(date, crop)
+    else
+        speech = integrate(parameterDate, parameterCrop)
     res = makeWebhookResult(speech)
     return res
 
@@ -102,7 +111,10 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
-        self.FIELD = 'field4'
+	if self.CROP == 'cotton'
+            self.FIELD = 'field4'
+        elif self.CROP == 'corn'
+            self.FIELD = 'field1'
         self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
         self._weather_url = 'https://api.awhere.com/v2/weather/fields'
