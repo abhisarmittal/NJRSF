@@ -208,7 +208,7 @@ class AWhereAPI(object):
 	
         response2 = rq.get(self._forecasts_url, headers=auth_headers)
         response2JSON = response2.json()
-	print('\nget_agronomic_url_today:: Response2JSON: %s' % response2JSON)
+        print('\nget_agronomic_url_today:: Response2JSON: %s' % response2JSON)
 	
         forecast = response2JSON['forecast']
         condition = forecast[0]['conditionsText']
