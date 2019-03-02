@@ -111,7 +111,7 @@ class AWhereAPI(object):
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
         self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
-        #self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
+        self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
 
     def number_of_days(self):
         startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
@@ -139,7 +139,6 @@ class AWhereAPI(object):
         sys.stdout.flush()
         return encoded_key_secret
 
-'''
     def get_oauth_token(self, encoded_key_secret):
         """
         Demonstrates how to make a HTTP POST request to obtain an OAuth Token
@@ -165,6 +164,7 @@ class AWhereAPI(object):
         sys.stdout.flush()
         return responseJSON['access_token']
 
+'''
     def get_agronomic_url_today(self):
         """
         Performs a HTTP GET request to obtain Agronomic Norms
