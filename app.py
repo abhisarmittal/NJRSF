@@ -83,8 +83,7 @@ def makeWebhookResult(speech):
 #FUNCTION TO CALL AWHERE
 def integrate():
     awhere = AWhereAPI()
-    #return awhere.get_agronomic_url_today()
-    return 'hello'
+    return awhere.get_agronomic_url_today()
 
 #AWHERE
 class AWhereAPI(object):
