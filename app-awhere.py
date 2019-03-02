@@ -188,11 +188,13 @@ class AWhereAPI(object):
         }
         print('\nget_agronomic_url_today:: Headers: %s' % auth_headers)
         sys.stdout.flush()
+	
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
         response = rq.get(self._agronomic_url, headers=auth_headers)
         responseJSON = response.json()
         print('\nget_agronomic_url_today:: ResponseJSON: %s' % responseJSON)
         sys.stdout.flush()
+	
         todayDailyNorm = responseJSON["dailyNorms"][0]
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
         pet = todayDailyNorm["pet"]["average"]
@@ -203,21 +205,50 @@ class AWhereAPI(object):
         sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
         sys.stdout.flush()
+	
         response2 = rq.get(self._forecasts_url, headers=auth_headers)
         response2JSON = response2.json()
-        rainy=False
+        print('\nget_agronomic_url_today:: Response2JSON: %s' % response2JSON)
+	
         forecast = response2JSON['forecast']
         condition = forecast[0]['conditionsText']
         if condition.find('No Rain') >= 0:
             rainy = False
-        if accGDD < 1:
-            resultGrowthStage = "emergence"
-        elif accGDD > 1:
-            resultGrowthStage = "open flower"
+	
+        #if crop is cotton
+        if self.CROP == 'cotton':
+            if accGDD>=0 and accGDD <28:
+                resultGrowthStage = 'planted'
+            elif accGDD >= 28 and accGDD < 306:
+                resultGrowthStage = "emergence"
+            elif accGDD >= 306 and accGDD < 528:
+                resultGrowthStage = "first-square"
+            elif accGDD >= 528 and accGDD < 1194:
+                resultGrowthStage = "first-flower"
+            elif accGDD >= 1194 and accGDD < 1444:
+                resultGrowthStage = "open-bolli"
+            elif accGDD >= 1444:
+                resultGrowthStage = "harvest"
+
+        #if crop is corn
+        if self.CROP == 'corn':
+            if accGDD>=0 and accGDD <65:
+                resultGrowthStage = 'planted'
+            elif accGDD >= 65 and accGDD < 740:
+                resultGrowthStage = "emergence"
+            elif accGDD >= 740 and accGDD < 1135:
+                resultGrowthStage = "rapid growth"
+            elif accGDD >= 1135 and accGDD < 1160:
+                resultGrowthStage = "pollination"
+            elif accGDD >= 1160 and accGDD < 1660:
+                resultGrowthStage = "grain fill"
+            elif accGDD >= 1660:
+                resultGrowthStage = "harvest"
+
         if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' mm. Your crop growth stage is ' + resultGrowthStage + '.'
+            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crop growth stage is ' + resultGrowthStage + '.'
         else:
-            return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+            return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
