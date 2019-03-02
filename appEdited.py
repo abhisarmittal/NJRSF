@@ -67,6 +67,27 @@ def processRequest(req):
     return res
 
 #AWHERE
+from __future__ import print_function
+from future.standard_library import install_aliases
+install_aliases()
+
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
+
+from builtins import str
+from builtins import bytes
+from builtins import object
+
+import requests as rq
+import base64
+import pprint
+import json
+import os
+import random
+import datetime
+from datetime import date
+
 class AWhereAPI(object):
     def __init__(self):
         """
@@ -77,11 +98,22 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = '02-27'
+        self.END_DT = '12-31'
+        self.START_DT = '05-01'
+        self.START_YEAR = '2015'
+        self.END_YEAR = '2018'
+        self.THIS_YEAR = '2019'
+        self.FIELD = 'field4'
+        self.NUM_OF_DAYS = self.number_of_days()
+        self._fields_url = 'https://api.awhere.com/v2/fields'
+        self._weather_url = 'https://api.awhere.com/v2/weather/fields'
+        self._agronomic_url = 'https://api.awhere.com/v2/agronomics/fields/' + self.FIELD + '/agronomicnorms/' + self.START_DT + ',' + self.END_DT + '/?limit=1&offset=' + self.NUM_OF_DAYS
+        self._forecasts_url = 'https://api.awhere.com/v2/weather/fields/' + self.FIELD + '/forecasts/' + self.THIS_DT
         self.api_key = 'r4AGIfSxMlQNkUPxQGgLx7kpIKovQCMI'
         self.api_secret = 'S9nipeJJ6AVLmRdG'
         self.base_64_encoded_secret_key = self.encode_secret_and_key(self.api_key, self.api_secret)
         self.auth_token = self.get_oauth_token(self.base_64_encoded_secret_key)
-	
+
     def encode_secret_and_key(self, key, secret):
         """
         Docs:
@@ -93,8 +125,8 @@ class AWhereAPI(object):
         key_secret = '%s:%s' % (key, secret)
         #print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
 
-        encoded_key_secret = base64.b64encode(
-            bytes(key_secret, 'utf-8')).decode('ascii')
+        encoded_key_secret = base64.b64encode(bytes(key_secret,
+                                                    'utf-8')).decode('ascii')
 
         #print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
         return encoded_key_secret
@@ -116,25 +148,59 @@ class AWhereAPI(object):
 
         body = "grant_type=client_credentials"
 
-        response = rq.post(auth_url,
-                           headers=auth_headers,
-                           data=body)
+        response = rq.post(auth_url, headers=auth_headers, data=body)
 
         # .json method is a requests lib method that decodes the response
         return response.json()['access_token']
 
-    def get_agronomic_url_today(self):	
-        response = rq.get("https://api.awhere.com/v2/agronomics/fields/field4/agronomicnorms/05-01,07-12/?limit=1&offset=72",
-                          headers=auth_headers)
-	
-        responseJSON = response.json()
+    def number_of_days(self):
+        startDate = date(2018, int(self.START_DT[0:2]), int(self.START_DT[3:5]))
+        endDate = date(2018, int(self.END_DT[0:2]), int(self.END_DT[3:5]))
+        numOfDays = endDate - startDate
+        return str(numOfDays)[0:str(numOfDays).find(' ')+1]
 
-        # Display the count of dailyNorms the user has on their account
-        dailyNorms = responseJSON["dailyNorms"]
-        todayDailyNorm = dailyNorms[0]
+    def get_agronomic_url_today(self):
+        """
+        Performs a HTTP GET request to obtain Agronomic Norms
+        Docs: 
+            1. Agronomic: https://developer.awhere.com/api/reference/agronomics/norms
+        """
+        # Setup the HTTP request headers
+        auth_headers = {
+            "Authorization": "Bearer %s" % self.auth_token,
+        }
+
+        # Perform the HTTP request to obtain the Agronomic Norms for the Field
+        response = rq.get(self._agronomic_url, headers=auth_headers)
+
+        responseJSON = response.json()
+        todayDailyNorm = responseJSON["dailyNorms"][0]
 
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
-        return accGDD
+        pet = todayDailyNorm["pet"]["average"]
+        potentialRatio = todayDailyNorm["ppet"]["average"]
+        precipitation = pet * potentialRatio
+        waterRequirements = pet - precipitation
+	
+        #response2 = rq.get(self._forecasts_url, headers=auth_headers)
+        #response2JSON = response2.json()
+
+        rainy=False
+        #forecast = response2JSON['forecast']
+        #condition = forecast[0]['conditionsText']
+        #if condition.find('No Rain') >= 0:
+            #rainy = False
+
+        if accGDD < 1:
+            resultGrowthStage = "emergence"
+
+        elif accGDD > 1:
+            resultGrowthStage = "open flower"
+
+        if (potentialRatio < 1) & (not rainy):
+            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
+        else:
+            return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
 
 #FUNCTION TO CALL AWHERE
 def integrate():
