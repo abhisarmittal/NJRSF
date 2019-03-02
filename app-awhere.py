@@ -64,15 +64,15 @@ def processRequest(req):
     parameterCrop = parameters["crop"]
 
     # checking for faults in parameters
-    startDt = date(2018, 05, 01)
-    endDt = date(2018, int(date[0:2]), int(date[3:5]))
-    if startDate>endDate:
+    startDt = date(2018, 5, 1)
+    endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
+    if startDt>endDt:
         speech = 'Growing season did not start yet!'
-    elif not (crop == 'cotton' or crop == 'corn'):
+    elif not (parameterCrop == 'cotton' or parameterCrop == 'corn'):
         speech = 'Crop not supported yet!'
 
     # constructing the resposne string.
-    else
+    else:
         speech = integrate(parameterDate, parameterCrop)
     res = makeWebhookResult(speech)
     return res
@@ -111,9 +111,9 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
-	if self.CROP == 'cotton'
+        if self.CROP == 'cotton':
             self.FIELD = 'field4'
-        elif self.CROP == 'corn'
+        elif self.CROP == 'corn':
             self.FIELD = 'field1'
         self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
@@ -198,7 +198,7 @@ class AWhereAPI(object):
         pet = todayDailyNorm["pet"]["average"]
         potentialRatio = todayDailyNorm["ppet"]["average"]
         precipitation = pet * potentialRatio
-        waterRequirements = pet - precipitation
+        waterRequirements = float("{0:.2f}".format(pet - precipitation))
         print('\nget_agronomic_url_today:: precipitation: %f' % precipitation)
         sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
@@ -215,7 +215,7 @@ class AWhereAPI(object):
         elif accGDD > 1:
             resultGrowthStage = "open flower"
         if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' and your crop growth stage is ' + resultGrowthStage
+            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your cotton crops are: ' + str(waterRequirements) + ' mm. Your crop growth stage is ' + resultGrowthStage + '.'
         else:
             return 'Today\'s date is ' + self.END_DT + '. Your crop growth stage is ' + resultGrowthStage + '. Do not water your crops.'
 
