@@ -13,6 +13,8 @@ app.py is rewritable for testing purposes;
 
 app-noIntegration is a webhook which works completely fine without integration
 
-app-awhere is attempting to make an awhere integration. As of 4:30 on 3/2/19, it is working.
+app-awhere is with awhere integration. It is working.
+
+app-awhere2 is attempt to add if statements in awhere integration.
 
 ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
