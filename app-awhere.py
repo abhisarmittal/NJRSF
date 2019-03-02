@@ -47,6 +47,7 @@ def webhook():
     res = processRequest(req)
     res = json.dumps(res, indent=4)
     print(res)
+    sys.stdout.flush()
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
@@ -68,7 +69,9 @@ def processRequest(req):
 
 def makeWebhookResult(speech):
     print("Response:")
+    sys.stdout.flush()
     print(speech)
+    sys.stdout.flush()
 
     return {
         "speech": speech,
@@ -117,6 +120,7 @@ class AWhereAPI(object):
         numOfDays = endDate - startDate
         numOfDaysStr = str(numOfDays)[0:str(numOfDays).find(' ')+1]
         print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
+        sys.stdout.flush()
         return numOfDaysStr
 '''
     def encode_secret_and_key(self, key, secret):
@@ -129,9 +133,11 @@ class AWhereAPI(object):
         # Base64 Encode the Secret and Key
         key_secret = '%s:%s' % (key, secret)
         print('\nKey and Secret before Base64 Encoding: %s' % key_secret)
+        sys.stdout.flush()
         encoded_key_secret = base64.b64encode(bytes(key_secret,
                                                     'utf-8')).decode('ascii')
         print('Key and Secret after Base64 Encoding: %s' % encoded_key_secret)
+        sys.stdout.flush()
         return encoded_key_secret
     def get_oauth_token(self, encoded_key_secret):
         """
@@ -148,12 +154,16 @@ class AWhereAPI(object):
         }
         body = "grant_type=client_credentials"
         print('\nget_oauth_token:: Headers: %s' % auth_headers)
+        sys.stdout.flush()
         print('\nget_oauth_token:: Body: %s' % body)
+        sys.stdout.flush()
         response = rq.post(auth_url, headers=auth_headers, data=body)
         # .json method is a requests lib method that decodes the response
         responseJSON = response.json()
         print('\nget_oauth_token:: ResponseJSON: %s' % responseJSON)
+        sys.stdout.flush()
         return responseJSON['access_token']
+
     def get_agronomic_url_today(self):
         """
         Performs a HTTP GET request to obtain Agronomic Norms
@@ -165,10 +175,12 @@ class AWhereAPI(object):
             "Authorization": "Bearer %s" % self.auth_token,
         }
         print('\nget_agronomic_url_today:: Headers: %s' % auth_headers)
+        sys.stdout.flush()
         # Perform the HTTP request to obtain the Agronomic Norms for the Field
         response = rq.get(self._agronomic_url, headers=auth_headers)
         responseJSON = response.json()
         print('\nget_agronomic_url_today:: ResponseJSON: %s' % responseJSON)
+        sys.stdout.flush()
         todayDailyNorm = responseJSON["dailyNorms"][0]
         accGDD = todayDailyNorm["accumulatedGdd"]["average"]
         pet = todayDailyNorm["pet"]["average"]
@@ -176,7 +188,9 @@ class AWhereAPI(object):
         precipitation = pet * potentialRatio
         waterRequirements = pet - precipitation
         print('\nget_agronomic_url_today:: precipitation: %f' % precipitation)
+        sys.stdout.flush()
         print('\nget_agronomic_url_today:: waterRequirements: %f' % waterRequirements)
+        sys.stdout.flush()
         #response2 = rq.get(self._forecasts_url, headers=auth_headers)
         #response2JSON = response2.json()
         rainy=False
