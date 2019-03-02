@@ -82,12 +82,12 @@ def makeWebhookResult(speech):
 
 #FUNCTION TO CALL AWHERE
 def integrate():
-    awhere = AWhereAPI()
+    awhere = AWhereAPI('12-31', 'cotton')
     return awhere.get_agronomic_url_today()
 
 #AWHERE
 class AWhereAPI(object):
-    def __init__(self):
+    def __init__(self, end_dt, crop):
         """
         Initializes the AWhereAPI class, which is used to perform HTTP requests 
         to the aWhere V2 API.
@@ -96,11 +96,12 @@ class AWhereAPI(object):
         """
         
         self.THIS_DT = datetime.datetime.today().strftime('%m-%d')
-        self.END_DT = '12-31'
+        self.END_DT = end_dt
         self.START_DT = '05-01'
         self.START_YEAR = '2015'
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
+	self.CROP = crop
         self.FIELD = 'field4'
         self.NUM_OF_DAYS = self.number_of_days()
         self._fields_url = 'https://api.awhere.com/v2/fields'
