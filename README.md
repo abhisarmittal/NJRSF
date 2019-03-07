@@ -19,8 +19,4 @@ app-workingEnglish.py is in english with awhere integration. It is working.
 
 app-awhere2.py is attempting to do all languages. It is working as of 21:21 on March 6.
 
-THINGS TO CHANGE FOR APP-AWHERE2.PY:
-
-ADD ACTUAL RESPONSES IN PART 2 OF CONSTRUCT_RESPONSES() METHOD (LINES 157-162)
-
 ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
