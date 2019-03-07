@@ -71,13 +71,11 @@ def processRequest(req):
         if parametersLang == "en":
             speech = 'Growing season did not start yet!'
         if parametersLang == "hi":
-	    speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
+            speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
         if parametersLang == "es":
-	    speech = 'La temporada de crecimiento no comenzó todavía!'
+            speech = 'La temporada de crecimiento no comenzó todavía!'
         if parametersLang == "fr"
-	    speech = 'Saison de croissance n a pas encore commencé!'
-    elif not (parameterCrop == 'cotton' or parameterCrop == 'corn'):
-        speech = 'Crop not supported yet!'
+            speech = 'Saison de croissance n a pas encore commencé!'
 
     # constructing the resposne string.
     else:
