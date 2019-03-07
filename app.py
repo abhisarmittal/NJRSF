@@ -143,9 +143,23 @@ class AWhereAPI(object):
 
     def construct_response(self, potentialRatio, rainy, waterRequirements, resultGrowthStage):
         if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+            if (self.LANG == 'en'):
+                return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+            elif (self.LANG == 'hi'):
+                return 'Hindi successful'
+            elif (self.LANG == 'es'):
+                return 'Spanish successful'
+            elif (self.LANG == 'fr'):
+                return 'French successful'
         else:
-            return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+            if (self.LANG == 'en'):
+                return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+            elif (self.LANG == 'hi'):
+                return 'Hindi unsuccessful'
+            elif (self.LANG == 'es'):
+                return 'Spanish unsuccessful'
+            elif (self.LANG == 'fr'):
+                return 'French unsuccessful'
 
     def encode_secret_and_key(self, key, secret):
         """
