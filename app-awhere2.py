@@ -155,11 +155,11 @@ class AWhereAPI(object):
             if (self.LANG == 'en'):
                 return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
             elif (self.LANG == 'hi'):
-                return 'Hindi unsuccessful'
+                return 'आज की तारीख ' + self.END_DT + 'है। ' + self.CROP + ' की फसल फसल वृद्धि अवस्था ' + resultGrowthStage + ' है। अपनी फसलों को पानी न दें।'
             elif (self.LANG == 'es'):
-                return 'Spanish unsuccessful'
+                return 'La fecha de hoy es ' + self.END_DT + '. La etapa de crecimiento de sus cultivos de ' + self.CROP + ' es ' + resultGrowthStage + '. No riegues tus cultivos.'
             elif (self.LANG == 'fr'):
-                return 'French unsuccessful'
+                return 'La date d\'aujourd\'hui est ' + self.END_DT + '. Le stade de croissance de vos cultures de ' + self.CROP + ' est ' + resultGrowthStage + '. N\'arrosez pas vos cultures.'
 
     def encode_secret_and_key(self, key, secret):
         """
