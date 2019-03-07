@@ -117,7 +117,7 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
-	self.LANG = lang
+        self.LANG = lang
         if self.CROP == 'cotton':
             self.FIELD = 'field4'
         elif self.CROP == 'corn':
