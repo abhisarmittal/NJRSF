@@ -148,9 +148,9 @@ class AWhereAPI(object):
             elif (self.LANG == 'hi'):
                 return 'आज की तारीख ' + self.END_DT + 'है। ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + 'मिलीमीटर हैं। फसल वृद्धि अवस्था ' + resultGrowthStage + 'है।'
             elif (self.LANG == 'es'):
-                return 'Spanish successful'
+                return 'La fecha de hoy es ' + self.END_DT + '. Las necesidades de agua de sus cultivos de ' + self.CROP + ' son de ' + str(waterRequirements) + 'milímetros. La etapa de crecimiento de los cultivos es ' + resultGrowthStage + '.'
             elif (self.LANG == 'fr'):
-                return 'French successful'
+                return 'La date d\'aujourd\'hui est ' + self.END_DT + '. Les besoins en eau de vos cultures de ' + self.CROP + ' sont de ' str(waterRequirements) + 'millimètres. Le stade de croissance de la culture est ' + resultGrowthStage + '.'
         else:
             if (self.LANG == 'en'):
                 return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
