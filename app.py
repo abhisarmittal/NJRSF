@@ -79,7 +79,7 @@ def processRequest(req):
 
     # constructing the resposne string.
     else:
-        speech = integrate(parameterDate, parameterCrop)
+        speech = integrate(parameterDate, parameterCrop, parameterLang)
     res = makeWebhookResult(speech)
     return res
 
@@ -96,13 +96,13 @@ def makeWebhookResult(speech):
     }
 
 #FUNCTION TO CALL AWHERE
-def integrate(date, crop):
-    awhere = AWhereAPI(date, crop)
+def integrate(date, crop, lang):
+    awhere = AWhereAPI(date, crop, lang)
     return awhere.get_agronomic_url_today()
 
 #AWHERE
 class AWhereAPI(object):
-    def __init__(self, end_dt, crop):
+    def __init__(self, end_dt, crop, lang):
         """
         Initializes the AWhereAPI class, which is used to perform HTTP requests 
         to the aWhere V2 API.
@@ -117,6 +117,7 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
+	self.LANG = lang
         if self.CROP == 'cotton':
             self.FIELD = 'field4'
         elif self.CROP == 'corn':
