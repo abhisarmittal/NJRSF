@@ -68,13 +68,13 @@ def processRequest(req):
     startDt = date(2018, 5, 1)
     endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
     if startDt>endDt:
-        if parametersLang == "en":
+        if parameterLang == "en":
             speech = 'Growing season did not start yet!'
-        if parametersLang == "hi":
+        if parameterLang == "hi":
             speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
-        if parametersLang == "es":
+        if parameterLang == "es":
             speech = 'La temporada de crecimiento no comenzó todavía!'
-        if parametersLang == "fr":
+        if parameterLang == "fr":
             speech = 'Saison de croissance n a pas encore commencé!'
 
     # constructing the resposne string.
