@@ -74,7 +74,7 @@ def processRequest(req):
             speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
         if parametersLang == "es":
             speech = 'La temporada de crecimiento no comenzó todavía!'
-        if parametersLang == "fr"
+        if parametersLang == "fr":
             speech = 'Saison de croissance n a pas encore commencé!'
 
     # constructing the resposne string.
