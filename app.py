@@ -141,6 +141,12 @@ class AWhereAPI(object):
         sys.stdout.flush()
         return numOfDaysStr
 
+    def construct_response(self, potentialRatio, rainy):
+        if (potentialRatio < 1) & (not rainy):
+            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+        else:
+            return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+
     def encode_secret_and_key(self, key, secret):
         """
         Docs:
@@ -252,10 +258,7 @@ class AWhereAPI(object):
             elif accGDD >= 1660:
                 resultGrowthStage = "harvest"
 
-        if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
-        else:
-            return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+        return construct_response(potentialRatio, rainy)
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
