@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*
 
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -68,14 +68,18 @@ def processRequest(req):
     startDt = date(2018, 5, 1)
     endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
     if startDt>endDt:
-	if parametersLang == "en":
-        	speech = 'Growing season did not start yet!'
-    elif not (parameterCrop == 'cotton' or parameterCrop == 'corn'):
-        speech = 'Crop not supported yet!'
+        if parameterLang == "en":
+            speech = 'Growing season did not start yet!'
+        if parameterLang == "hi":
+            speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
+        if parameterLang == "es":
+            speech = 'La temporada de crecimiento no comenzó todavía!'
+        if parameterLang == "fr":
+            speech = 'Saison de croissance n a pas encore commencé!'
 
     # constructing the resposne string.
     else:
-        speech = integrate(parameterDate, parameterCrop)
+        speech = integrate(parameterDate, parameterCrop, parameterLang)
     res = makeWebhookResult(speech)
     return res
 
@@ -92,13 +96,13 @@ def makeWebhookResult(speech):
     }
 
 #FUNCTION TO CALL AWHERE
-def integrate(date, crop):
-    awhere = AWhereAPI(date, crop)
+def integrate(date, crop, lang):
+    awhere = AWhereAPI(date, crop, lang)
     return awhere.get_agronomic_url_today()
 
 #AWHERE
 class AWhereAPI(object):
-    def __init__(self, end_dt, crop):
+    def __init__(self, end_dt, crop, lang):
         """
         Initializes the AWhereAPI class, which is used to perform HTTP requests 
         to the aWhere V2 API.
@@ -113,6 +117,7 @@ class AWhereAPI(object):
         self.END_YEAR = '2018'
         self.THIS_YEAR = '2019'
         self.CROP = crop
+        self.LANG = lang
         if self.CROP == 'cotton':
             self.FIELD = 'field4'
         elif self.CROP == 'corn':
@@ -135,6 +140,26 @@ class AWhereAPI(object):
         print('\nnumber_of_days:: numOfDaysStr: %s' % numOfDaysStr)
         sys.stdout.flush()
         return numOfDaysStr
+
+    def construct_response(self, potentialRatio, rainy, waterRequirements, resultGrowthStage):
+        if (potentialRatio < 1) & (not rainy):
+            if (self.LANG == 'en'):
+                return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+            elif (self.LANG == 'hi'):
+                return 'Hindi successful'
+            elif (self.LANG == 'es'):
+                return 'Spanish successful'
+            elif (self.LANG == 'fr'):
+                return 'French successful'
+        else:
+            if (self.LANG == 'en'):
+                return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+            elif (self.LANG == 'hi'):
+                return 'Hindi unsuccessful'
+            elif (self.LANG == 'es'):
+                return 'Spanish unsuccessful'
+            elif (self.LANG == 'fr'):
+                return 'French unsuccessful'
 
     def encode_secret_and_key(self, key, secret):
         """
@@ -247,10 +272,7 @@ class AWhereAPI(object):
             elif accGDD >= 1660:
                 resultGrowthStage = "harvest"
 
-        if (potentialRatio < 1) & (not rainy):
-            return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
-        else:
-            return 'Today\'s date is ' + self.END_DT + '. Your ' + self.FIELD + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
+        return self.construct_response(potentialRatio, rainy, waterRequirements, resultGrowthStage)
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
