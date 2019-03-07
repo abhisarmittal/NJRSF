@@ -141,7 +141,7 @@ class AWhereAPI(object):
         sys.stdout.flush()
         return numOfDaysStr
 
-    def construct_response(self, potentialRatio, rainy):
+    def construct_response(self, potentialRatio, rainy, waterRequirements, resultGrowthStage):
         if (potentialRatio < 1) & (not rainy):
             return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
         else:
@@ -258,7 +258,7 @@ class AWhereAPI(object):
             elif accGDD >= 1660:
                 resultGrowthStage = "harvest"
 
-        return construct_response(potentialRatio, rainy)
+        return construct_response(potentialRatio, rainy, waterRequirements, resultGrowthStage)
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
