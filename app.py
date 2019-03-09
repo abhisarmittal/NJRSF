@@ -239,6 +239,7 @@ class AWhereAPI(object):
 	
         forecast = response2JSON['forecast']
         condition = forecast[0]['conditionsText']
+        rainy=True
         if condition.find('No Rain') >= 0:
             rainy = False
 	
