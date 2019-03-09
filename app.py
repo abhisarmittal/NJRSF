@@ -144,7 +144,7 @@ class AWhereAPI(object):
     def construct_response(self, potentialRatio, rainy, waterRequirements, resultGrowthStage):
         if (potentialRatio < 1) & (not rainy):
             if (self.LANG == 'en'):
-                return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.FIELD + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+                return 'Today\'s date is ' + self.END_DT + '. Your water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
             elif (self.LANG == 'hi'):
                 return 'आज की तारीख ' + self.END_DT + 'है। ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। फसल वृद्धि अवस्था ' + resultGrowthStage + 'है।'
             elif (self.LANG == 'es'):
