@@ -265,11 +265,11 @@ class AWhereAPI(object):
                 resultGrowthStage = "emergence"
             elif accGDD >= 740 and accGDD < 1135:
                 resultGrowthStage = "rapid growth"
-            elif accGDD >= 1135 and accGDD < 1160:
+            elif accGDD >= 1135 and accGDD < 1660:
                 resultGrowthStage = "pollination"
-            elif accGDD >= 1160 and accGDD < 1660:
+            elif accGDD >= 1660 and accGDD < 2700:
                 resultGrowthStage = "grain fill"
-            elif accGDD >= 1660:
+            elif accGDD >= 2700:
                 resultGrowthStage = "harvest"
 
         return self.construct_response(potentialRatio, rainy, waterRequirements, resultGrowthStage)
