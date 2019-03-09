@@ -239,9 +239,10 @@ class AWhereAPI(object):
 	
         forecast = response2JSON['forecast']
         condition = forecast[0]['conditionsText']
-        rainy=True
-        if condition.find('No Rain') >= 0:
-            rainy = False
+        print('\nget_agronomic_url_today:: Condition: %s' % condition
+        rainy=False
+        if condition.find('Rain') >= 0 && not condition.find('No')>=0:
+            rainy = True
 	
         #if crop is cotton
         if self.CROP == 'cotton':
