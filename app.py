@@ -243,6 +243,8 @@ class AWhereAPI(object):
         rainy=True
         if condition.find('No Rain') >= 0:
             rainy = False
+        if not self.THIS_DT == self.END_DT:
+            rainy = False
 	
         #if crop is cotton
         if self.CROP == 'cotton':
