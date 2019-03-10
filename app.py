@@ -146,7 +146,7 @@ class AWhereAPI(object):
             if (self.LANG == 'en'):
                 return 'Today\'s date is ' + self.END_DT + '. PET is ' + str(pet) + ' and PPET is ' + str(ppet) + '. So, the water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Accumulated GDD is ' + str(accGDD) + '. So, your crops\' growth stage is ' + resultGrowthStage + '.'
             elif (self.LANG == 'hi'):
-                return 'आज की तारीख ' + self.END_DT + 'है। PET ' + str(pet) + ' है और PPET ' + str(ppet) + ' है। इसलिए, ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। Accumulated GDD ' + str(accGDD) + ' है। इसलिए,फसल वृद्धि अवस्था '+ resultGrowthStage + 'है।'
+                return 'आज की तारीख ' + self.END_DT + ' है। PET ' + str(pet) + ' है और PPET ' + str(ppet) + ' है। इसलिए, ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। Accumulated GDD ' + str(accGDD) + ' है। इसलिए,फसल वृद्धि अवस्था '+ resultGrowthStage + ' है।'
             elif (self.LANG == 'es'):
                 return 'La fecha de hoy es ' + self.END_DT + '. PET es ' + str(pet) + ' y PPET es ' + str(ppet) + '. Asi que, las necesidades de agua de sus cultivos de ' + self.CROP + ' son de ' + str(waterRequirements) + ' milímetros. Accumulated GDD es ' + str(accGDD) + '. Asi que, la etapa de crecimiento de los cultivos es ' + resultGrowthStage + '.'
             elif (self.LANG == 'fr' or self.LANG == 'fr-FR' or self.LANG == 'fr-CA'):
