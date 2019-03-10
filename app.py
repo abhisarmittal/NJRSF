@@ -68,13 +68,13 @@ def processRequest(req):
     startDt = date(2018, 5, 1)
     endDt = date(2018, int(parameterDate[0:2]), int(parameterDate[3:5]))
     if startDt>endDt:
-        if parameterLang == "en":
+        if parameterLang == 'en':
             speech = 'Growing season did not start yet!'
-        if parameterLang == "hi":
+        if parameterLang == 'hi':
             speech = 'बढ़ता मौसम अभी तक शुरू नहीं हुआ था!'
-        if parameterLang == "es":
+        if parameterLang == 'es':
             speech = 'La temporada de crecimiento no comenzó todavía!'
-        if parameterLang == "fr":
+        if parameterLang == 'fr' or parameterLang == 'fr-FR' or parameterLang == 'fr-CA':
             speech = 'Saison de croissance n a pas encore commencé!'
 
     # constructing the resposne string.
@@ -149,7 +149,7 @@ class AWhereAPI(object):
                 return 'आज की तारीख ' + self.END_DT + 'है। PET ' + str(pet) + ' है और PPET ' + str(ppet) + ' है। इसलिए, ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। Accumulated GDD ' + str(accGDD) + ' है। इसलिए,फसल वृद्धि अवस्था '+ resultGrowthStage + 'है।'
             elif (self.LANG == 'es'):
                 return 'La fecha de hoy es ' + self.END_DT + '. PET es ' + str(pet) + ' y PPET es ' + str(ppet) + '. Asi que, las necesidades de agua de sus cultivos de ' + self.CROP + ' son de ' + str(waterRequirements) + ' milímetros. Accumulated GDD es ' + str(accGDD) + '. Asi que, la etapa de crecimiento de los cultivos es ' + resultGrowthStage + '.'
-            elif (self.LANG == 'fr'):
+            elif (self.LANG == 'fr' or self.LANG == 'fr-FR' or self.LANG == 'fr-CA'):
                 return 'La date d\'aujourd\'hui est ' + self.END_DT + '. PET est ' + str(pet) + ' et PPET est ' + str(ppet) + '. Alors, les besoins en eau de vos cultures de ' + self.CROP + ' sont de ' + str(waterRequirements) + ' millimètres. Accumulated GDD est ' + str(accGDD) + '. Alors, le stade de croissance de la culture est ' + resultGrowthStage + '.'
         else:
             if (self.LANG == 'en'):
@@ -158,7 +158,7 @@ class AWhereAPI(object):
                 return 'आज की तारीख ' + self.END_DT + 'है। Accumulated GDD ' + str(accGDD) + ' है। इसलिए,' + self.CROP + ' की फसल फसल वृद्धि अवस्था ' + resultGrowthStage + ' है। अपनी फसलों को पानी न दें।'
             elif (self.LANG == 'es'):
                 return 'La fecha de hoy es ' + self.END_DT + '. Accumulated GDD es ' + str(accGDD) + '. Asi que, la etapa de crecimiento de sus cultivos de ' + self.CROP + ' es ' + resultGrowthStage + '. No riegues tus cultivos.'
-            elif (self.LANG == 'fr'):
+            elif (self.LANG == 'fr' or self.LANG == 'fr-FR' or self.LANG == 'fr-CA'):
                 return 'La date d\'aujourd\'hui est ' + self.END_DT + '. Accumulated GDD est ' + str(accGDD) + '. Alors, le stade de croissance de vos cultures de ' + self.CROP + ' est ' + resultGrowthStage + '. N\'arrosez pas vos cultures.'
 
     def encode_secret_and_key(self, key, secret):
