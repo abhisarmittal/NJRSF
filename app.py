@@ -144,13 +144,13 @@ class AWhereAPI(object):
     def construct_response(self, potentialRatio, rainy, waterRequirements, resultGrowthStage, accGDD, pet, ppet):
         if (potentialRatio < 1) & (not rainy):
             if (self.LANG == 'en'):
-                return 'Today\'s date is ' + self.END_DT + '. The PET is ' + pet + 'and the PPET is ' + ppet + '. So, the water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. Your crops\' growth stage is ' + resultGrowthStage + '.'
+                return 'Today\'s date is ' + self.END_DT + '. The PET is ' + pet + 'and the PPET is ' + ppet + '. So, the water requirements for your ' + self.CROP + ' crops are: ' + str(waterRequirements) + ' mm. GDD is ' + gdd + '. So, your crops\' growth stage is ' + resultGrowthStage + '.'
             elif (self.LANG == 'hi'):
-                return 'आज की तारीख ' + self.END_DT + 'है। PET ' + pet + ' है और PPET ' + ppet + ' है। इसलिए, ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। फसल वृद्धि अवस्था '+ resultGrowthStage + 'है।'
+                return 'आज की तारीख ' + self.END_DT + 'है। PET ' + pet + ' है और PPET ' + ppet + ' है। इसलिए, ' + self.CROP + ' की फसल के लिए आपकी पानी की जरूरतें ' + str(waterRequirements) + ' मिलीमीटर हैं। GDD ' + gdd + ' है। इसलिए,फसल वृद्धि अवस्था '+ resultGrowthStage + 'है।'
             elif (self.LANG == 'es'):
-                return 'La fecha de hoy es ' + self.END_DT + '. PET es ' + pet + ' y PPET es ' + ppet + '. Asi que, las necesidades de agua de sus cultivos de ' + self.CROP + ' son de ' + str(waterRequirements) + ' milímetros. La etapa de crecimiento de los cultivos es ' + resultGrowthStage + '.'
+                return 'La fecha de hoy es ' + self.END_DT + '. PET es ' + pet + ' y PPET es ' + ppet + '. Asi que, las necesidades de agua de sus cultivos de ' + self.CROP + ' son de ' + str(waterRequirements) + ' milímetros. GDD es ' + gdd + '. Asi que, la etapa de crecimiento de los cultivos es ' + resultGrowthStage + '.'
             elif (self.LANG == 'fr'):
-                return 'La date d\'aujourd\'hui est ' + self.END_DT + '. PET est ' + pet + ' et PPET est ' + ppet + '. Alors, les besoins en eau de vos cultures de ' + self.CROP + ' sont de ' + str(waterRequirements) + ' millimètres. Le stade de croissance de la culture est ' + resultGrowthStage + '.'
+                return 'La date d\'aujourd\'hui est ' + self.END_DT + '. PET est ' + pet + ' et PPET est ' + ppet + '. Alors, les besoins en eau de vos cultures de ' + self.CROP + ' sont de ' + str(waterRequirements) + ' millimètres. GDD est ' + gdd + '. Alors, le stade de croissance de la culture est ' + resultGrowthStage + '.'
         else:
             if (self.LANG == 'en'):
                 return 'Today\'s date is ' + self.END_DT + '. Your ' + self.CROP + ' crops\' growth stage is ' + resultGrowthStage + '. Do not water your crops.'
