@@ -276,7 +276,7 @@ class AWhereAPI(object):
             elif accGDD >= 2700:
                 resultGrowthStage = "harvest"
 
-        return self.construct_response(potentialRatio, rainy, waterRequirements, resultGrowthStage, accGDD, pet, precipitation)
+        return self.construct_response(potentialRatio, rainy, waterRequirements, resultGrowthStage, float("{0:.2f}".format(accGDD), float("{0:.2f}".format(pet), float("{0:.2f}".format(ppet))
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
