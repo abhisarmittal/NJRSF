@@ -248,17 +248,17 @@ class AWhereAPI(object):
 	
         #if crop is cotton
         if self.CROP == 'cotton':
-            if accGDD>=0 and accGDD <28:
+            if accGDD>=0 and accGDD <50:
                 resultGrowthStage = 'planted'
-            elif accGDD >= 28 and accGDD < 306:
+            elif accGDD >= 50 and accGDD < 550:
                 resultGrowthStage = "emergence"
-            elif accGDD >= 306 and accGDD < 528:
+            elif accGDD >= 550 and accGDD < 950:
                 resultGrowthStage = "first-square"
-            elif accGDD >= 528 and accGDD < 1194:
+            elif accGDD >= 950 and accGDD < 2150:
                 resultGrowthStage = "first-flower"
-            elif accGDD >= 1194 and accGDD < 1444:
+            elif accGDD >= 2150 and accGDD < 2200:
                 resultGrowthStage = "open-bolli"
-            elif accGDD >= 1444:
+            elif accGDD >=2200:
                 resultGrowthStage = "harvest"
 
         #if crop is corn
