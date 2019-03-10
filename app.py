@@ -63,6 +63,8 @@ def processRequest(req):
     parameterDate = parameters["date"][5:10]
     parameterCrop = parameters["crop"]
     parameterLang = req_dict["lang"]
+    print('\nprocessRequest:: parameterLang: %s' % parameterLang)
+    sys.stdout.flush()
 
     # checking for faults in parameters
     startDt = date(2018, 5, 1)
