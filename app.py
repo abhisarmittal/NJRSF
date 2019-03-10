@@ -236,14 +236,16 @@ class AWhereAPI(object):
         response2 = rq.get(self._forecasts_url, headers=auth_headers)
         response2JSON = response2.json()
         print('\nget_agronomic_url_today:: Response2JSON: %s' % response2JSON)
-	
-        forecast = response2JSON['forecast']
-        condition = forecast[0]['conditionsText']
-        print('\nget_agronomic_url_today:: Condition: %s' % condition)
-        rainy=True
-        if condition.find('No Rain') >= 0:
-            rainy = False
-        if not self.THIS_DT == self.END_DT:
+
+        if self.THIS_DT == self.END_DT:
+            forecast = response2JSON['forecast']
+            condition = forecast[0]['conditionsText']
+            print('\nget_agronomic_url_today:: Condition: %s' % condition)
+            if condition.find('No Rain') >= 0:
+                rainy = False
+            else:
+                rainy = True
+        else:
             rainy = False
 	
         #if crop is cotton
