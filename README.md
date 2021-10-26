@@ -18,5 +18,3 @@ app-awhere.py is in english with awhere integration. It is working.
 app-workingEnglish.py is in english with awhere integration. It is working.
 
 app-awhere2.py is all languages with awhere integration. It is working.
-
-ALWAYS COPY AND PASTE CODE IF YOU WISH TO TEST UR APP THROUGH APP.PY. DO NOT RENAME FILES.
